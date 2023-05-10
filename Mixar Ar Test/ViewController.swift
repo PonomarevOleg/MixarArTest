@@ -3,7 +3,7 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController {
-    private var boxState = 0
+    private var cubeState = 0
     private var models = 0
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var downButton: UIButton!
@@ -153,12 +153,12 @@ extension ViewController: ARSCNViewDelegate {
 /// Изменение цвета кубиков
 extension ViewController {
     private func changeBoxColor(cube: SCNNode) {
-        self.boxState += 1
-        if boxState > 4 {
-            boxState = 0
+        self.cubeState += 1
+        if cubeState > 4 {
+            cubeState = 0
         }
         
-        switch boxState {
+        switch cubeState {
         case 0 : colorChange(color: .green, cube: cube)
         case 1 : colorChange(color: .yellow, cube: cube)
         case 2 : colorChange(color: .yellow, cube: cube)

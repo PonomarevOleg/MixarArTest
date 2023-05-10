@@ -12,7 +12,6 @@
 		1110362D2A06813B00EEE11A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1110362B2A06813B00EEE11A /* Main.storyboard */; };
 		1110362F2A06814300EEE11A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1110362E2A06814300EEE11A /* Assets.xcassets */; };
 		111036322A06814300EEE11A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 111036302A06814300EEE11A /* LaunchScreen.storyboard */; };
-		111036682A0B5B3300EEE11A /* crystal.dae in Resources */ = {isa = PBXBuildFile; fileRef = 111036672A0B5B3300EEE11A /* crystal.dae */; };
 		1110366A2A0B5C3B00EEE11A /* ModelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036692A0B5C3B00EEE11A /* ModelScene.swift */; };
 		1110366C2A0B61BD00EEE11A /* NodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1110366B2A0B61BD00EEE11A /* NodeExtension.swift */; };
 		111036722A0BADF900EEE11A /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036712A0BADF900EEE11A /* Cube.swift */; };
@@ -25,7 +24,6 @@
 		1110362C2A06813B00EEE11A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1110362E2A06814300EEE11A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		111036312A06814300EEE11A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		111036672A0B5B3300EEE11A /* crystal.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = crystal.dae; path = "../../../../Downloads/model (1)/crystal.dae"; sourceTree = "<group>"; };
 		111036692A0B5C3B00EEE11A /* ModelScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelScene.swift; sourceTree = "<group>"; };
 		1110366B2A0B61BD00EEE11A /* NodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeExtension.swift; sourceTree = "<group>"; };
 		1110366D2A0B764F00EEE11A /* Mixar-Ar-Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mixar-Ar-Test-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -79,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				111036712A0BADF900EEE11A /* Cube.swift */,
-				111036672A0B5B3300EEE11A /* crystal.dae */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,7 +140,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				111036322A06814300EEE11A /* LaunchScreen.storyboard in Resources */,
-				111036682A0B5B3300EEE11A /* crystal.dae in Resources */,
 				1110362F2A06814300EEE11A /* Assets.xcassets in Resources */,
 				1110362D2A06813B00EEE11A /* Main.storyboard in Resources */,
 			);
