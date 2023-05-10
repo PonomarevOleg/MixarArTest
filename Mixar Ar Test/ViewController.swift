@@ -5,19 +5,19 @@ import ARKit
 class ViewController: UIViewController {
     private var cubeState = 0
     private var models = 0
-    @IBOutlet var leftButton: UIButton!
-    @IBOutlet var downButton: UIButton!
-    @IBOutlet var rightButton: UIButton!
-    @IBOutlet var upButton: UIButton!
-    @IBOutlet var upButtonImageView: UIImageView!
-    @IBOutlet var leftButtonImageView: UIImageView!
-    @IBOutlet var rightButtonImageView: UIImageView!
-    @IBOutlet var downButtonImageView: UIImageView!
-    var sceneController = ModelScene()
+    @IBOutlet private var leftButton: UIButton!
+    @IBOutlet private var downButton: UIButton!
+    @IBOutlet private var rightButton: UIButton!
+    @IBOutlet private var upButton: UIButton!
+    @IBOutlet private var upButtonImageView: UIImageView!
+    @IBOutlet private var leftButtonImageView: UIImageView!
+    @IBOutlet private var rightButtonImageView: UIImageView!
+    @IBOutlet private var downButtonImageView: UIImageView!
+    private var sceneController = ModelScene()
     
     @IBOutlet var sceneView: ARSCNView!
     
-    var didInitializeScene: Bool = false
+    private var didInitializeScene: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,28 +27,28 @@ class ViewController: UIViewController {
         addGesture()
     }
     
-    @IBAction func upButtonTap(_ sender: Any) {
+    @IBAction private func upButtonTap(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cubeNode = node as? Cube {
                 cubeNode.moveUp()
             }
         })
     }
-    @IBAction func rightButtonTap(_ sender: Any) {
+    @IBAction private func rightButtonTap(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cubeNode = node as? Cube {
                 cubeNode.moveRight()
             }
         })
     }
-    @IBAction func downButtonTap(_ sender: Any) {
+    @IBAction private func downButtonTap(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cubeNode = node as? Cube {
                 cubeNode.moveDown()
             }
         })
     }
-    @IBAction func leftButtonTap(_ sender: Any) {
+    @IBAction private func leftButtonTap(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cubeNode = node as? Cube {
                 cubeNode.moveLeft()
