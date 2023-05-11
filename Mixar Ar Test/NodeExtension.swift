@@ -13,6 +13,7 @@ extension SCNNode {
             let objScene = try SCNScene(url: sceneURL as URL, options: [SCNSceneSource.LoadingOption.animationImportPolicy: SCNSceneSource.AnimationImportPolicy.doNotPlay])
             objScene.rootNode.enumerateChildNodes({ (node, _) in
                 nodesInFile.append(node)
+                node.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
             })
         } catch {}
         return nodesInFile

@@ -30,11 +30,25 @@ struct ModelScene {
         scene.rootNode.addChildNode(directionalNode)
     }
     
+    func addCoins(position: SCNVector3) {
+        guard let scene = self.scene else { return }
+        
+        let containerNode = SCNNode()
+        let nodesInFile = SCNNode.allNodes(from: "Coin.dae")
+        
+        nodesInFile.forEach { (node) in
+            containerNode.addChildNode(node)
+        }
+        
+        containerNode.position = position
+        scene.rootNode.addChildNode(containerNode)
+    }
+    
     func addModel(modelName: String, position: SCNVector3) {
         guard let scene = self.scene else { return }
         
         let containerNode = SCNNode()
-        let nodesInFile = SCNNode.allNodes(from: modelName)
+        let nodesInFile = SCNNode.allNodes(from: "Coin.Dae")
         
         nodesInFile.forEach { (node) in
             containerNode.addChildNode(node)
