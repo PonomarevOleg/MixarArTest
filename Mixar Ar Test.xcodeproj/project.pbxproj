@@ -16,6 +16,7 @@
 		111036722A0BADF900EEE11A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036712A0BADF900EEE11A /* Models.swift */; };
 		11A39A2B2A0D0657006D5B8F /* crystal.dae in Resources */ = {isa = PBXBuildFile; fileRef = 11A39A2A2A0D0657006D5B8F /* crystal.dae */; };
 		11A39A3C2A0E09D1006D5B8F /* Coin.dae in Resources */ = {isa = PBXBuildFile; fileRef = 11A39A3B2A0E09D0006D5B8F /* Coin.dae */; };
+		11A39A412A0E6284006D5B8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11A39A402A0E6283006D5B8F /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		11A39A302A0DFE9D006D5B8F /* Coin2_BaseColor.jpg.001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Coin2_BaseColor.jpg.001.jpg; sourceTree = "<group>"; };
 		11A39A3B2A0E09D0006D5B8F /* Coin.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = Coin.dae; path = "../../../../../AR Models/Coin.dae"; sourceTree = "<group>"; };
 		11A39A3F2A0E2CC9006D5B8F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
+		11A39A402A0E6283006D5B8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 		11A39A292A0CF96A006D5B8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11A39A402A0E6283006D5B8F /* Assets.xcassets */,
 				11A39A3F2A0E2CC9006D5B8F /* coin.wav */,
 				1110362B2A06813B00EEE11A /* Main.storyboard */,
 				111036302A06814300EEE11A /* LaunchScreen.storyboard */,
@@ -158,6 +161,7 @@
 				11A39A2B2A0D0657006D5B8F /* crystal.dae in Resources */,
 				11A39A3C2A0E09D1006D5B8F /* Coin.dae in Resources */,
 				1110362D2A06813B00EEE11A /* Main.storyboard in Resources */,
+				11A39A412A0E6284006D5B8F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

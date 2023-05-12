@@ -39,7 +39,6 @@ struct ModelScene {
         nodesInFile.forEach { (node) in
             containerNode.addChildNode(node)
         }
-        
         containerNode.position = position
         let body = SCNPhysicsBody(type: .static, shape: nil)
         containerNode.physicsBody = body

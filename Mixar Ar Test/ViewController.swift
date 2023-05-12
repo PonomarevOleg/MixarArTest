@@ -4,26 +4,34 @@ import ARKit
 import AVKit
 import Vision
 
+struct CollisionCategory: OptionSet {
+    let rawValue: Int
+    
+    static let cubeCategory = CollisionCategory(rawValue: 1 << 0)
+    static let coinCategory = CollisionCategory(rawValue: 1 << 1)
+}
+
 class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDelegate {
     private var player: AVAudioPlayer?
     private var cubeState = 0
     private var models = 0
-    @IBOutlet var coinButton: UIButton!
-    @IBOutlet private var countNameLabel: UILabel!
-    @IBOutlet private var countLabel: UILabel!
-    @IBOutlet private var leftButton: UIButton!
-    @IBOutlet private var downButton: UIButton!
-    @IBOutlet private var rightButton: UIButton!
-    @IBOutlet private var upButton: UIButton!
-    @IBOutlet private var upButtonImageView: UIImageView!
-    @IBOutlet private var leftButtonImageView: UIImageView!
-    @IBOutlet private var rightButtonImageView: UIImageView!
-    @IBOutlet private var downButtonImageView: UIImageView!
-    @IBOutlet var sceneView: ARSCNView!
+    private var didInitializeScene: Bool = false
     private var sceneController = ModelScene()
     
-    private var didInitializeScene: Bool = false
-    
+    @IBOutlet weak var coinButton: UIButton!
+    @IBOutlet private weak var countNameLabel: UILabel!
+    @IBOutlet private weak var countLabel: UILabel!
+    @IBOutlet private weak var leftButton: UIButton!
+    @IBOutlet private weak var downButton: UIButton!
+    @IBOutlet private weak var rightButton: UIButton!
+    @IBOutlet private weak var upButton: UIButton!
+    @IBOutlet private weak var upButtonImageView: UIImageView!
+    @IBOutlet private weak var leftButtonImageView: UIImageView!
+    @IBOutlet private weak var rightButtonImageView: UIImageView!
+    @IBOutlet private weak var downButtonImageView: UIImageView!
+    @IBOutlet weak var sceneView: ARSCNView!
+
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +40,20 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
         addGesture()
         startObjectDetection()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        resetTracking()
+    }
+ 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        sceneView.session.pause()
+    }
+    
+    // MARK: - IBAction
     /// управление движением кубиков
     @IBAction private func upButtonTap(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
@@ -51,6 +73,7 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cubeNode = node as? Cube {
                 cubeNode.moveDown()
+                
             }
         })
     }
@@ -62,7 +85,7 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
         })
     }
     /// добавление монет
-    @IBAction func addCoinsButton(_ sender: Any) {
+    @IBAction private func addCoinsButton(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cube = node as? Cube {
                 let randomBool = Bool.random()
@@ -73,41 +96,14 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
                             y: cube.position.y + 0.1,
                             z: cube.position.z
                         )
-                        
                     )
                 }
             }
         })
-        
-        sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
-            if let coin = node as? Coin {
-                coin.startRotaing()
-            }
-        })
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        resetTracking()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        sceneView.session.pause()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
-    func resetTracking() {
+
+    // MARK: - Private functions
+    private func resetTracking() {
         let configuration = ARWorldTrackingConfiguration()
         let referenceImage = ARReferenceImage.referenceImages(
             inGroupNamed: "marker",
@@ -121,23 +117,24 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
         sceneView.scene.physicsWorld.contactDelegate = self
         sceneView.delegate = self
         sceneView.showsStatistics = true
-        sceneView.session.delegate = self
         if let scene = sceneController.scene {
             sceneView.scene = scene
         }
     }
 }
 
+// MARK: - ARSCNViewDelegate
 extension ViewController: ARSCNViewDelegate {
-    func addGesture() {
+    private func addGesture() {
+        sceneView.session.delegate = self
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressScreen))
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTapScreen))
         self.view.addGestureRecognizer(tapRecognizer)
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressScreen))
         self.view.addGestureRecognizer(longPressRecognizer)
     }
     
     /// изменение цвета и создание кубиков
-    @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
+    @objc private func didTapScreen(recognizer: UITapGestureRecognizer) {
         if didInitializeScene, let camera = sceneView.session.currentFrame?.camera {
             let tapLocation = recognizer.location(in: sceneView)
             let hitTestResults = sceneView.hitTest(tapLocation)
@@ -160,7 +157,7 @@ extension ViewController: ARSCNViewDelegate {
         }
     }
     /// удаление кубика
-    @objc func longPressScreen(recognizer: UILongPressGestureRecognizer) {
+    @objc private func longPressScreen(recognizer: UILongPressGestureRecognizer) {
         models -= 1
         let tapLocation = recognizer.location(in: sceneView)
         let hitTestResults = sceneView.hitTest(tapLocation)
@@ -171,14 +168,14 @@ extension ViewController: ARSCNViewDelegate {
             checkModels()
         }
     }
-    /// распознавание изображния
+    /// Распознавание изображния
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
         let referenceImage = imageAnchor.referenceImage
         DispatchQueue.global().async {
             
             let position = SCNVector3(imageAnchor.transform.columns.3.x, imageAnchor.transform.columns.3.y, imageAnchor.transform.columns.3.z + 0.5)
-            print("Comon")
+            print("Image found")
             let cube = Cube()
             cube.position = position
             self.sceneController.addModel(modelName: "crystal.dae", position: position)
@@ -192,20 +189,8 @@ extension ViewController: ARSCNViewDelegate {
             }
         }
     }
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        
-    }
 }
-    /// Изменение цвета кубиков
+    // MARK: - Cube color controll
 extension ViewController {
     private func changeBoxColor(cube: SCNNode) {
         cubeState += 1
@@ -239,9 +224,9 @@ extension ViewController {
         cube.geometry = box
     }
 }
-
+    
+    // MARK: - Visibility control
 extension ViewController {
-    ///  контроль видимости элементов управления кубиками
     private func showButtons() {
         countLabel.isHidden = false
         countNameLabel.isHidden = false
@@ -286,39 +271,35 @@ extension ViewController {
     }
 }
 
-    /// распознавание изображений
+    // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func startObjectDetection() {
         let captureSession = AVCaptureSession()
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
-        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
+        let dataOutput = AVCaptureVideoDataOutput()
+        guard let captureDevice = AVCaptureDevice.default(for: .video),
+                let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
         captureSession.addInput(input)
         DispatchQueue.global(qos: .background).async {
             captureSession.startRunning()
         }
-        //        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        //        view.layer.addSublayer(previewLayer)
-        //        previewLayer.frame = view.frame
-        
-        let dataOutput = AVCaptureVideoDataOutput()
         dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
         captureSession.addOutput(dataOutput)
-        
-        func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-            print("Camera is ready to detect", Date())
-        }
+    }
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        print("Camera is ready to detect", Date())
     }
 }
 
-    /// логика столкновения кубов с монетами
+    // MARK: - AR Models Collision
 extension ViewController {
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         print("Collision happened")
         
         if contact.nodeA.physicsBody?.contactTestBitMask == CollisionCategory.coinCategory.rawValue {
             contact.nodeA.removeFromParentNode()
-            DispatchQueue.main.async {
-                playSound(sound: "coin", format: "wav")
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.playSound(sound: "coin", format: "wav")
                 if let countText = self.countLabel.text {
                     if let count = Int(countText) {
                         self.countLabel.text = String(count + 1)
@@ -330,8 +311,9 @@ extension ViewController {
         
         if contact.nodeB.physicsBody?.contactTestBitMask == CollisionCategory.coinCategory.rawValue {
             contact.nodeB.removeFromParentNode()
-            DispatchQueue.main.async {
-                playSound(sound: "coin", format: "wav")
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.playSound(sound: "coin", format: "wav")
                 if let countText = self.countLabel.text {
                     if let count = Int(countText) {
                         self.countLabel.text = String(count + 1)
@@ -343,14 +325,7 @@ extension ViewController {
     }
 }
 
-struct CollisionCategory: OptionSet {
-    let rawValue: Int
-    
-    static let cubeCategory = CollisionCategory(rawValue: 1 << 0)
-    static let coinCategory = CollisionCategory(rawValue: 1 << 1)
-}
-
-/// MARK: - sounds
+    // MARK: - Sounds
 extension ViewController {
     func playSound(sound : String, format: String) {
         guard let url = Bundle.main.url(forResource: sound, withExtension: format) else { return }
@@ -366,5 +341,5 @@ extension ViewController {
             print(error.localizedDescription)
         }
     }
-    
 }
+
