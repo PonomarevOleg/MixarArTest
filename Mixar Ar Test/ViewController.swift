@@ -5,6 +5,7 @@ import AVKit
 import Vision
 
 class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDelegate {
+    private var player: AVAudioPlayer?
     private var cubeState = 0
     private var models = 0
     @IBOutlet var coinButton: UIButton!
@@ -31,7 +32,7 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
         addGesture()
         startObjectDetection()
     }
-/// управление движением кубиков
+    /// управление движением кубиков
     @IBAction private func upButtonTap(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cubeNode = node as? Cube {
@@ -60,7 +61,7 @@ class ViewController: UIViewController, ARSessionDelegate, SCNPhysicsContactDele
             }
         })
     }
-/// добавление монет
+    /// добавление монет
     @IBAction func addCoinsButton(_ sender: Any) {
         sceneController.scene?.rootNode.enumerateChildNodes({ (node, _) in
             if let cube = node as? Cube {
@@ -135,7 +136,7 @@ extension ViewController: ARSCNViewDelegate {
         self.view.addGestureRecognizer(longPressRecognizer)
     }
     
-/// изменение цвета и создание кубиков
+    /// изменение цвета и создание кубиков
     @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
         if didInitializeScene, let camera = sceneView.session.currentFrame?.camera {
             let tapLocation = recognizer.location(in: sceneView)
@@ -170,7 +171,7 @@ extension ViewController: ARSCNViewDelegate {
             checkModels()
         }
     }
-    
+    /// распознавание изображния
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
         let referenceImage = imageAnchor.referenceImage
@@ -204,10 +205,10 @@ extension ViewController: ARSCNViewDelegate {
         
     }
 }
-/// Изменение цвета кубиков
+    /// Изменение цвета кубиков
 extension ViewController {
     private func changeBoxColor(cube: SCNNode) {
-        self.cubeState += 1
+        cubeState += 1
         if cubeState > 4 {
             cubeState = 0
         }
@@ -215,7 +216,7 @@ extension ViewController {
         switch cubeState {
         case 0 : colorChange(color: .green, cube: cube)
         case 1 : colorChange(color: .yellow, cube: cube)
-        case 2 : colorChange(color: .yellow, cube: cube)
+        case 2 : colorChange(color: .magenta, cube: cube)
         case 3 : colorChange(color: .red, cube: cube)
         default: colorChange(color: .cyan, cube: cube)
         }
@@ -240,6 +241,7 @@ extension ViewController {
 }
 
 extension ViewController {
+    ///  контроль видимости элементов управления кубиками
     private func showButtons() {
         countLabel.isHidden = false
         countNameLabel.isHidden = false
@@ -269,9 +271,10 @@ extension ViewController {
     private func checkModels() {
         models != 0 ? showButtons() : hideButtons()
     }
-    
+    /// настройка UI
     private func setupUI() {
         checkModels()
+        countLabel.text = String(0)
         downButtonImageView.transform = downButtonImageView.transform.rotated(by: .pi)
         leftButtonImageView.transform = leftButtonImageView.transform.rotated(by: .pi * 1.5)
         rightButtonImageView.transform = rightButtonImageView.transform.rotated(by: .pi / 2)
@@ -283,7 +286,7 @@ extension ViewController {
     }
 }
 
-/// распознавание изображений
+    /// распознавание изображений
 extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func startObjectDetection() {
         let captureSession = AVCaptureSession()
@@ -307,16 +310,61 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 }
 
-/// логика столкновения кубов с монетами
+    /// логика столкновения кубов с монетами
 extension ViewController {
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         print("Collision happened")
+        
+        if contact.nodeA.physicsBody?.contactTestBitMask == CollisionCategory.coinCategory.rawValue {
+            contact.nodeA.removeFromParentNode()
+            DispatchQueue.main.async {
+                playSound(sound: "coin", format: "wav")
+                if let countText = self.countLabel.text {
+                    if let count = Int(countText) {
+                        self.countLabel.text = String(count + 1)
+                    }
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+        if contact.nodeB.physicsBody?.contactTestBitMask == CollisionCategory.coinCategory.rawValue {
+            contact.nodeB.removeFromParentNode()
+            DispatchQueue.main.async {
+                playSound(sound: "coin", format: "wav")
+                if let countText = self.countLabel.text {
+                    if let count = Int(countText) {
+                        self.countLabel.text = String(count + 1)
+                    }
+                }
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
 
 struct CollisionCategory: OptionSet {
     let rawValue: Int
     
-    static let coinCategory = CollisionCategory(rawValue: 1 << 0)
-    static let cubeCategory = CollisionCategory(rawValue: 1 << 1)
+    static let cubeCategory = CollisionCategory(rawValue: 1 << 0)
+    static let coinCategory = CollisionCategory(rawValue: 1 << 1)
+}
+
+/// MARK: - sounds
+extension ViewController {
+    func playSound(sound : String, format: String) {
+        guard let url = Bundle.main.url(forResource: sound, withExtension: format) else { return }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            guard let player = player else { return }
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
 }

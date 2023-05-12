@@ -20,10 +20,13 @@ class SceneObject: SCNNode {
             material.locksAmbientWithDiffuse = true
             return material
         }
-        let body = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: cubeNode))
-        cubeNode.physicsBody = body
         box.materials = sideMaterials
         cubeNode.geometry = box
+        let body = SCNPhysicsBody(type: .static, shape: nil)
+        cubeNode.physicsBody = body
+        cubeNode.physicsBody?.categoryBitMask = CollisionCategory.cubeCategory.rawValue
+        cubeNode.physicsBody?.collisionBitMask = CollisionCategory.coinCategory.rawValue
+        self.addChildNode(cubeNode)
     }
     
     required init?(coder: NSCoder) {
@@ -66,7 +69,6 @@ class ModelObject: SCNNode {
         super.init()
         let nodesInFile = SCNNode.allNodes(from: file)
         nodesInFile.forEach { (node) in
-            node.physicsBody?.categoryBitMask = CollisionCategory.coinCategory.rawValue
             self.addChildNode(node)
         }
     }

@@ -10,13 +10,12 @@
 		111036262A06813B00EEE11A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036252A06813B00EEE11A /* AppDelegate.swift */; };
 		111036282A06813B00EEE11A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036272A06813B00EEE11A /* ViewController.swift */; };
 		1110362D2A06813B00EEE11A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1110362B2A06813B00EEE11A /* Main.storyboard */; };
-		1110362F2A06814300EEE11A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1110362E2A06814300EEE11A /* Assets.xcassets */; };
 		111036322A06814300EEE11A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 111036302A06814300EEE11A /* LaunchScreen.storyboard */; };
 		1110366A2A0B5C3B00EEE11A /* ModelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036692A0B5C3B00EEE11A /* ModelScene.swift */; };
 		1110366C2A0B61BD00EEE11A /* NodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1110366B2A0B61BD00EEE11A /* NodeExtension.swift */; };
 		111036722A0BADF900EEE11A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111036712A0BADF900EEE11A /* Models.swift */; };
 		11A39A2B2A0D0657006D5B8F /* crystal.dae in Resources */ = {isa = PBXBuildFile; fileRef = 11A39A2A2A0D0657006D5B8F /* crystal.dae */; };
-		11A39A2D2A0D19E6006D5B8F /* Coin.dae in Resources */ = {isa = PBXBuildFile; fileRef = 11A39A2C2A0D19E6006D5B8F /* Coin.dae */; };
+		11A39A3C2A0E09D1006D5B8F /* Coin.dae in Resources */ = {isa = PBXBuildFile; fileRef = 11A39A3B2A0E09D0006D5B8F /* Coin.dae */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,14 +23,15 @@
 		111036252A06813B00EEE11A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		111036272A06813B00EEE11A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1110362C2A06813B00EEE11A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1110362E2A06814300EEE11A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		111036312A06814300EEE11A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		111036692A0B5C3B00EEE11A /* ModelScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelScene.swift; sourceTree = "<group>"; };
 		1110366B2A0B61BD00EEE11A /* NodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeExtension.swift; sourceTree = "<group>"; };
 		1110366D2A0B764F00EEE11A /* Mixar-Ar-Test.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Mixar-Ar-Test.plist"; path = "Mixar Ar Test/Mixar-Ar-Test.plist"; sourceTree = SOURCE_ROOT; };
 		111036712A0BADF900EEE11A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		11A39A2A2A0D0657006D5B8F /* crystal.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = crystal.dae; path = "../../../../../../Downloads/model (1)/crystal.dae"; sourceTree = "<group>"; };
-		11A39A2C2A0D19E6006D5B8F /* Coin.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = Coin.dae; path = "../../../../../AR Models/Coin.dae"; sourceTree = "<group>"; };
+		11A39A302A0DFE9D006D5B8F /* Coin2_BaseColor.jpg.001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Coin2_BaseColor.jpg.001.jpg; sourceTree = "<group>"; };
+		11A39A3B2A0E09D0006D5B8F /* Coin.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = Coin.dae; path = "../../../../../AR Models/Coin.dae"; sourceTree = "<group>"; };
+		11A39A3F2A0E2CC9006D5B8F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,8 @@
 			children = (
 				11A39A2A2A0D0657006D5B8F /* crystal.dae */,
 				111036712A0BADF900EEE11A /* Models.swift */,
-				11A39A2C2A0D19E6006D5B8F /* Coin.dae */,
+				11A39A302A0DFE9D006D5B8F /* Coin2_BaseColor.jpg.001.jpg */,
+				11A39A3B2A0E09D0006D5B8F /* Coin.dae */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -88,7 +89,7 @@
 		11A39A292A0CF96A006D5B8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1110362E2A06814300EEE11A /* Assets.xcassets */,
+				11A39A3F2A0E2CC9006D5B8F /* coin.wav */,
 				1110362B2A06813B00EEE11A /* Main.storyboard */,
 				111036302A06814300EEE11A /* LaunchScreen.storyboard */,
 			);
@@ -153,10 +154,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11A39A2D2A0D19E6006D5B8F /* Coin.dae in Resources */,
 				111036322A06814300EEE11A /* LaunchScreen.storyboard in Resources */,
 				11A39A2B2A0D0657006D5B8F /* crystal.dae in Resources */,
-				1110362F2A06814300EEE11A /* Assets.xcassets in Resources */,
+				11A39A3C2A0E09D1006D5B8F /* Coin.dae in Resources */,
 				1110362D2A06813B00EEE11A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

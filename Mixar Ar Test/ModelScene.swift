@@ -41,6 +41,10 @@ struct ModelScene {
         }
         
         containerNode.position = position
+        let body = SCNPhysicsBody(type: .static, shape: nil)
+        containerNode.physicsBody = body
+        containerNode.physicsBody?.categoryBitMask = CollisionCategory.coinCategory.rawValue
+        containerNode.physicsBody?.collisionBitMask = CollisionCategory.cubeCategory.rawValue
         scene.rootNode.addChildNode(containerNode)
     }
     
